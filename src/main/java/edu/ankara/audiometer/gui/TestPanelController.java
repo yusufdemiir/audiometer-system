@@ -88,7 +88,13 @@ public class TestPanelController {
                                 Integer.parseInt(intensityValueLabel.getText())
                         ))
                         .filter(PatientResponse::heard)
-                        .ifPresent(response -> showResponseOverlay());
+                        .ifPresent(response -> {
+                            // Odyograma eşik noktasını kaydet
+                            int db = Integer.parseInt(intensityValueLabel.getText());
+                            ServiceRegistry.thresholds.add(
+                                    new edu.ankara.audiometer.model.Threshold(currentFreq, db, currentEar));
+                            showResponseOverlay();
+                        });
             });
         });
         
@@ -173,6 +179,11 @@ public class TestPanelController {
             }
             intensityValueLabel.setText(String.valueOf(snapped));
         });
+
+        // Başlangıçta slider değerini zorla eşitle — listener sadece değişimde tetiklenir,
+        // kullanıcı hiç dokunmasa handlePlay() içindeki parseInt("") patlar.
+        int initVal = (int) Math.round(intensitySlider.getValue());
+        intensityValueLabel.setText(String.valueOf(initVal));
     }
 
     private void handlePlay() {

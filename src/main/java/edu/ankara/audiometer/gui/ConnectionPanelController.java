@@ -37,8 +37,17 @@ public class ConnectionPanelController {
 
         // Set combo data
         portCombo.setItems(FXCollections.observableArrayList(serialService.listAvailablePorts()));
+        portCombo.setEditable(true); // Sanal/özel port adları elle yazılabilsin (ör. /dev/ttys004)
+
         baudCombo.setItems(FXCollections.observableArrayList(9600, 19200, 38400, 115200));
-        
+        baudCombo.setEditable(true); // Seçilen değeri görmek için editable + converter gerekli
+        baudCombo.setConverter(new javafx.util.StringConverter<Integer>() {
+            @Override public String toString(Integer v)   { return v == null ? "" : String.valueOf(v); }
+            @Override public Integer fromString(String s) {
+                try { return Integer.parseInt(s.trim()); } catch (NumberFormatException e) { return 9600; }
+            }
+        });
+
         if (!portCombo.getItems().isEmpty()) {
             portCombo.getSelectionModel().selectFirst();
         }

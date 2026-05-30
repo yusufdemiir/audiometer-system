@@ -319,3 +319,32 @@
 .status-indicator-red {
     -fx-fill: -fx-danger;
 }
+
+/* ================================================================
+   Audiogram Panel
+   ================================================================ */
+
+/* Canvas kapsayıcı: kartın içini doldur, padding yok ki canvas
+   tam boyuta çıkabilsin */
+.audiogram-canvas-wrapper {
+    -fx-padding: 8 8 8 8;
+    -fx-background-color: -fx-white;
+    -fx-background-radius: 8;
+    -fx-border-color: -fx-gray-200;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 2, 0, 0, 1);
+}
+
+/* Legend sembolleri */
+.legend-symbol-right {
+    -fx-text-fill: #DC2626;   /* kırmızı – sağ kulak */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.legend-symbol-left {
+    -fx-text-fill: #2563EB;   /* mavi – sol kulak */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

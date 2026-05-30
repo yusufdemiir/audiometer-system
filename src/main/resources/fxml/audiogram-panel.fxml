@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.geometry.Insets?>
 
@@ -8,27 +9,43 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="edu.ankara.audiometer.gui.AudiogramPanelController"
       styleClass="p-6, gap-6" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-      
+
+    <!-- Başlık + dışa aktarma butonları -->
     <HBox alignment="CENTER_LEFT" spacing="16">
-        <Label fx:id="titleLabel" styleClass="text-2xl, font-semibold, text-gray-800" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Label fx:id="titleLabel" styleClass="text-2xl, font-semibold, text-gray-800"
+               HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
         <Region HBox.hgrow="ALWAYS" />
         <Button fx:id="exportPngBtn" styleClass="button, btn-secondary">
             <graphic>
-                <SVGPath content="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3" stroke="#4B5563" strokeWidth="2" fill="transparent"/>
+                <SVGPath content="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"
+                         stroke="#4B5563" strokeWidth="2" fill="transparent"/>
             </graphic>
         </Button>
         <Button fx:id="exportPdfBtn" styleClass="button, btn-secondary">
             <graphic>
-                <SVGPath content="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3" stroke="#4B5563" strokeWidth="2" fill="transparent"/>
+                <SVGPath content="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4 M7 10l5 5 5-5 M12 15V3"
+                         stroke="#4B5563" strokeWidth="2" fill="transparent"/>
             </graphic>
         </Button>
     </HBox>
-    
-    <VBox styleClass="card" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-        <VBox styleClass="card-content, gap-6" alignment="CENTER" VBox.vgrow="ALWAYS">
-            <SVGPath content="M3 3v18h18 M18 9l-5-5-4 4-5-5" stroke="#9CA3AF" strokeWidth="2" fill="transparent" scaleX="3" scaleY="3" />
-            <Label text="Audiogram Chart Placeholder" styleClass="text-xl, font-medium, text-gray-400" />
-            <Label text="This area will be replaced with JavaFX Charts or JFreeChart integration in later stages." styleClass="text-sm, text-gray-400" wrapText="true" textAlignment="CENTER" />
-        </VBox>
-    </VBox>
+
+    <!-- Legend: kulak renk açıklaması -->
+    <HBox spacing="24" alignment="CENTER_LEFT">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="○" styleClass="legend-symbol-right"/>
+            <Label text="Sağ Kulak" styleClass="text-sm, text-gray-600"/>
+        </HBox>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="✕" styleClass="legend-symbol-left"/>
+            <Label text="Sol Kulak" styleClass="text-sm, text-gray-600"/>
+        </HBox>
+    </HBox>
+
+    <!-- Odyogram Canvas kapsılayıcısı: Pane kullanılıyor (VBox değil!) -->
+    <!-- Pane boyutunu parent'tan alır, Canvas'tan değil → feedback loop yok -->
+    <Pane fx:id="canvasContainer" styleClass="audiogram-canvas-wrapper"
+          VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <Canvas fx:id="audiogramCanvas" width="600" height="400"/>
+    </Pane>
+
 </VBox>
